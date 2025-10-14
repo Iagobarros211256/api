@@ -35,7 +35,7 @@ var rotasUsuarios = []Rota{
 	},
 
 	{
-		URI:                "/usuarios/{Id}",
+		URI:                "/usuarios/{usuarioId}",
 		Metodo:             http.MethodDelete,
 		Funcao:             controllers.DeletarUsuario,
 		RequerAutenticacao: false,
