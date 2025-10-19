@@ -10,8 +10,9 @@ import (
 
 func main() {
 	config.Carregar()
-	fmt.Printf("escutando na  porta %d", config.Porta)
 
 	r := router.Gerar()
+	fmt.Println(config.SecretKey)
+	fmt.Printf("escutando na porta %d", config.Porta)
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", config.Porta), r))
 }
