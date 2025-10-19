@@ -17,7 +17,7 @@ func CriarToken(usuarioID uint64) (string, error) {
 	permissoes["exp"] = time.Now().Add(time.Hour * 6).Unix()
 	permissoes["usuarioId"] = usuarioID
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, permissoes)
-	return token.SignedString([]byte("config.SecretKey"))
+	return token.SignedString([]byte(config.SecretKey))
 
 }
 
@@ -43,7 +43,7 @@ func extrairToken(r *http.Request) string {
 }
 func retornarChaveDeVerificacao(token *jwt.Token) (interface{}, error) {
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-		return nil, fmt.Errorf("metodo de assinatura inesperado  %v", token.Header["alg"])
+		return nil, fmt.Errorf("metodo de assinatura inesperado!  %v", token.Header["alg"])
 	}
 
 	return config.SecretKey, nil
