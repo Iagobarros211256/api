@@ -7,7 +7,7 @@ import (
 	"api/src/repositorios"
 	"api/src/respostas"
 	"encoding/json"
-	"fmt"
+	"errors"
 	"io"
 	"net/http"
 	"strconv"
@@ -110,7 +110,10 @@ func AtualizarUsuario(w http.ResponseWriter, r *http.Request) {
 
 	}
 
-	fmt.Println(usuarioIDNoToken)
+	if usuarioID != usuarioIDNoToken {
+		respostas.Erro(w, http.StatusForbidden, errors.New("nao eh possivel atualizar o usuario que nao seja seu"))
+		return
+	}
 
 	corpoRequisicao, erro := io.ReadAll(r.Body)
 	if erro != nil {
