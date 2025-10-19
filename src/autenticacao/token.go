@@ -34,12 +34,12 @@ func ValidarToken(r *http.Request) error {
 }
 
 func extrairToken(r *http.Request) string {
-	token := r.Header.Get("authorization")
+	token := r.Header.Get("Authorization")
 	if len(strings.Split(token, " ")) == 2 {
 		return strings.Split(token, " ")[1]
 	}
 
-	return " "
+	return ""
 }
 func retornarChaveDeVerificacao(token *jwt.Token) (interface{}, error) {
 	if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
