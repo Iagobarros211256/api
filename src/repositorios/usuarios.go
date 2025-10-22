@@ -169,3 +169,7 @@ func (repositorio Usuarios) PararDeSeguir(usuarioID, seguidorID uint64) error {
 
 	return nil
 }
+
+func (repositorio Usuarios) BuscarSeguidores(usuarioID uint64) ([]modelos.Usuario, error) {
+	linhas, erro := repositorio.db.Query("select u.id, u.nome, u.nick, u.email, u.criadoEm from usuarios u inner join seguidores s on u,id = s.seguidor_id where s.usuario_id = ?", usuarioID)
+}
