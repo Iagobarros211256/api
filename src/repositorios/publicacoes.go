@@ -36,3 +36,7 @@ func (repositorio Publicacoes) Criar(publicacao modelos.Publicacao) (uint64, err
 	return uint64(ultimoIDInserido), nil
 
 }
+
+func (repositorio Publicacoes) BuscarPorID(publicacaoID uint64) (modelos.Publicacao, error) {
+
+}
