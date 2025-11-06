@@ -189,7 +189,7 @@ func (repositorio Publicacoes) Curtir(publicacaoID uint64) error {
 // subtrai uma curtida em uma publi
 func (repositorio Publicacoes) Descurtir(publicacaoID uint64) error {
 	statement, erro := repositorio.db.Prepare(`
-	    update publicacaoes set curtidas =
+	    update publicacoes set curtidas =
 		CASE 
 		     WHEN curtidas > 0 THEN curtidas - 1
 		     ELSE 0 
