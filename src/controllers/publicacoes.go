@@ -208,7 +208,7 @@ func DeletarPublicacao(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if publicacaoSalvaNoBanco.AutorID != usuarioID {
-		respostas.Erro(w, http.StatusForbidden, errors.New("nao eh possivel atualizar uma publi que nao eh a sua"))
+		respostas.Erro(w, http.StatusForbidden, errors.New("nao eh possivel deletar uma publi que nao eh a sua"))
 		return
 	}
 
@@ -218,4 +218,30 @@ func DeletarPublicacao(w http.ResponseWriter, r *http.Request) {
 	}
 
 	respostas.JSON(w, http.StatusNoContent, nil)
+}
+
+func BuscarPublicacoesPorUsuario(w http.ResponseWriter, r *http.Request) {
+	parametros := mux.Vars(r)
+	usuarioID, erro := strconv.ParseUint(parametros["usuarioId"], 10, 64)
+	if erro != nil {
+		respostas.Erro(w, http.StatusBadRequest, erro)
+		return
+	}
+
+	db, erro := banco.Conectar()
+	if erro != nil {
+		respostas.Erro(w, http.StatusInternalServerError, erro)
+		return
+	}
+
+	defer db.Close()
+
+	repositorio := repositorios.NovoRepositorioDePublicacoes(db)
+	publicacoes, erro := repositorio.BuscarPorUsuario(usuarioID)
+	if erro != nil {
+		respostas.Erro(w, http.StatusInternalServerError, erro)
+		return
+	}
+
+	respostas.JSON(w, http.StatusOK, publicacoes)
 }
